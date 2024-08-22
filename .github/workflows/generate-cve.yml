@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-  schedule:
-    - cron: '*/30 * * * *'
   workflow_dispatch:
     inputs:
       clean:
@@ -37,13 +35,10 @@ jobs:
         with:
           ref: main
 
-      - name: Import GPG Key
-        uses: crazy-max/ghaction-import-gpg@v6
-        with:
-          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
-          passphrase: ${{ secrets.GPG_PASSPHRASE }}
-          git_user_signingkey: true
-          git_commit_gpgsign: true
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "actions@github.com"
 
       - name: Checkout Fleet
         uses: actions/checkout@v4
@@ -109,24 +104,3 @@ jobs:
           keep_latest: 144
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Slack Notification
-        if: failure()
-        uses: slackapi/slack-github-action@v1.18.0
-        with:
-          payload: |
-            {
-              "text": "${{ job.status }}\n${{ github.event.pull_request.html_url || github.event.head.html_url }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Security artifacts generation result: ${{ job.status }}\nhttps://github.com/fleetdm/vulnerabilities/actions/runs/${{  github.run_id }}\n${{ github.event.pull_request.html_url || github.event.head.html_url }}"
-                  }
-                }
-              ]
-            }
-        env:
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_G_HELP_P2_WEBHOOK_URL }}
-          SLACK_WEBHOOK_TYPE: INCOMING_WEBHOOK
