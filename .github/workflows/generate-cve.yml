@@ -66,6 +66,7 @@ jobs:
         run: |
           cd goval-dictionary
           make build
+          mkdir -p ../fleet/cvefeed
           ./goval-dictionary fetch amazon 1 --dbpath ../fleet/cvefeed/amzn_01.sqlite3
           ./goval-dictionary fetch amazon 2 --dbpath ../fleet/cvefeed/amzn_02.sqlite3
           ./goval-dictionary fetch amazon 2022 --dbpath ../fleet/cvefeed/amzn_2022.sqlite3
