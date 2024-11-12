@@ -70,26 +70,23 @@ jobs:
 
       - name: Pull Amazon Linux 1 vulnerabilities
         run: |
-          cd goval-dictionary
-          ./goval-dictionary fetch amazon 1 --dbpath ../fleet/cvefeed/amzn_01.sqlite3
+          goval-dictionary/goval-dictionary fetch amazon 1 --dbpath ./fleet/cvefeed/amzn_01.sqlite3
 
       - name: Pull Amazon Linux 2 vulnerabilities
         run: |
-          cd goval-dictionary
-          ./goval-dictionary fetch amazon 2 --dbpath ../fleet/cvefeed/amzn_02.sqlite3
+          goval-dictonary/goval-dictionary fetch amazon 2 --dbpath ./fleet/cvefeed/amzn_02.sqlite3
 
       - name: Pull Amazon Linux 2022 vulnerabilities
         run: |
-          cd goval-dictionary
-          ./goval-dictionary fetch amazon 2022 --dbpath ../fleet/cvefeed/amzn_2022.sqlite3
+          goval-dictionary/goval-dictionary fetch amazon 2022 --dbpath ./fleet/cvefeed/amzn_2022.sqlite3
 
       - name: Pull Amazon Linux 2023 vulnerabilities
         run: |
-          cd goval-dictionary
-          ./goval-dictionary fetch amazon 2023 --dbpath ../fleet/cvefeed/amzn_2023.sqlite3
+          goval-dictionary/goval-dictionary fetch amazon 2023 --dbpath ./fleet/cvefeed/amzn_2023.sqlite3
 
       - name: Compress Amazon Linux vulnerability sqlite files
-        run: xz ../fleet/cvefeed/*.sqlite3
+        run:
+          xz ./fleet/cvefeed/*.sqlite3
 
       - name: Current date
         id: date
