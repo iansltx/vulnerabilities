@@ -45,7 +45,7 @@ jobs:
         with:
           repository: fleetdm/fleet
           fetch-depth: 1
-          ref: language-tag-check
+          ref: main
           path: fleet
 
       - name: Checkout goval-dictionary
