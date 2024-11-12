@@ -62,17 +62,35 @@ jobs:
           cache: false
           go-version: '^1.23.3'
 
-      - name: Generate goval-dictionary sqlite files
+      - name: Guild goval-dictionary and ensure destination dir exists
         run: |
           cd goval-dictionary
           make build
           mkdir -p ../fleet/cvefeed
+
+      - name: Pull Amazon Linux 1 vulnerabilities
+        run: |
+          cd goval-dictionary
           ./goval-dictionary fetch amazon 1 --dbpath ../fleet/cvefeed/amzn_01.sqlite3
+
+      - name: Pull Amazon Linux 2 vulnerabilities
+        run: |
+          cd goval-dictionary
           ./goval-dictionary fetch amazon 2 --dbpath ../fleet/cvefeed/amzn_02.sqlite3
+
+      - name: Pull Amazon Linux 2022 vulnerabilities
+        run: |
+          cd goval-dictionary
           ./goval-dictionary fetch amazon 2022 --dbpath ../fleet/cvefeed/amzn_2022.sqlite3
+
+      - name: Pull Amazon Linux 2023 vulnerabilities
+        run: |
+          cd goval-dictionary
           ./goval-dictionary fetch amazon 2023 --dbpath ../fleet/cvefeed/amzn_2023.sqlite3
-          xz ../fleet/cvefeed/*.sqlite3
-            
+
+      - name: Compress Amazon Linux vulnerability sqlite files
+        run: xz ../fleet/cvefeed/*.sqlite3
+
       - name: Current date
         id: date
         run: |
