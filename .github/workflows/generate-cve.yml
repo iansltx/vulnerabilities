@@ -62,12 +62,6 @@ jobs:
           cache: false
           go-version: '^1.21.4'
 
-      - name: Generate NVD Feeds
-        run: |
-          cd fleet
-          go mod download
-          go run cmd/cve/generate.go --db_dir ./cvefeed --debug
-
       - name: Generate goval-dictionary sqlite files
         run: |
           cd goval-dictionary
