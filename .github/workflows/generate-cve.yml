@@ -40,7 +40,7 @@ jobs:
         with:
           repository: fleetdm/fleet
           fetch-depth: 1
-          ref: 28857-plus-broken-vulncheck
+          ref: 28857-vuln-checks
           path: fleet
 
       - name: Checkout goval-dictionary
